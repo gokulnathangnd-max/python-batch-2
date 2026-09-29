@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Registration System</title>
+</head>
+<body style="font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px;">
+
+    <h2>Register New User</h2>
+    <div style="margin-bottom: 15px;">
+        <input type="text" id="name" placeholder="Full Name" style="padding: 8px; width: 200px;"><br><br>
+        <input type="number" id="age" placeholder="Age" style="padding: 8px; width: 200px;"><br><br>
+        <input type="text" id="rollno" placeholder="Roll Number" style="padding: 8px; width: 200px;"><br><br>
+        <button onclick="submitUser()" style="padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer;">Register</button>
+    </div>
+
+    <!-- Status Messages show up here -->
+    <p id="statusMessage" style="font-weight: bold;"></p>
+
+    <!-- Admin shortcut link -->
+    <p style="margin-top: 30px; font-size: 14px;">
+        <a href="/login" style="color: #007bff; text-decoration: none;">Go to Admin Login Dashboard →</a>
+    </p>
+
+    <script>
+        async function submitUser() {
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const rollno = document.getElementById('rollno').value;
+            const statusMessage = document.getElementById('statusMessage');
+
+            if (!name || !age || !rollno) {
+                statusMessage.style.color = "red";
+                statusMessage.innerText = "All fields are required.";
+                return;
+            }
+
+            try {
+                const response = await fetch('/user', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, age, rollno })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    statusMessage.style.color = "green";
+                    statusMessage.innerText = data.message;
+                    
+                    // Clear inputs without reloading the browser page
+                    document.getElementById('name').value = '';
+                    document.getElementById('age').value = '';
+                    document.getElementById('rollno').value = '';
+                } else {
+                    statusMessage.style.color = "red";
+                    statusMessage.innerText = data.error || "Submission failed";
+                }
+            } catch (err) {
+                statusMessage.style.color = "red";
+                statusMessage.innerText = "Error connecting to server.";
+            }
+        }
+    </script>
+</body>
+</html>

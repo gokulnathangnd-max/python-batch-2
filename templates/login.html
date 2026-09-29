@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login yes</title>
+</head>
+<body style="font-family: Arial, sans-serif; max-width: 400px; margin: 80px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
+
+    <h2>Admin System Login yes</h2>
+    
+    {% if error %}
+        <p style="color: red; font-weight: bold;">{{ error }}</p>
+    {% endif %}
+
+    <form action="/login" method="POST">
+        <div style="margin-bottom: 15px;">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username" required style="padding: 8px; width: 93%; margin-top: 5px;">
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" required style="padding: 8px; width: 93%; margin-top: 5px;">
+        </div>
+        <button type="submit" style="padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; border-radius: 4px; width: 100%;">Log In</button>
+    </form>
+    
+    <p style="text-align: center; margin-top: 20px;">
+        <a href="/" style="color: #666; text-decoration: none;">← Back to Registration</a>
+    </p>
+
+</body>
+</html>
